@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'umi';
 import { Button } from 'antd';
 import {
   ModalForm,
@@ -18,16 +19,19 @@ export interface AddDataProps {
 }
 
 const AddData = ({ title, onFinish, initialValues, trigger }: AddDataProps) => {
+  const intl = useIntl();
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title={title || 'Add Trade'}
+      title={
+        title || intl.formatMessage({ id: 'bookkeeping.actions.add.title' })
+      }
       trigger={
         trigger || (
           <Button icon={<PlusOutlined />} type="primary">
-            Add
+            {intl.formatMessage({ id: 'bookkeeping.actions.add' })}
           </Button>
         )
       }
@@ -39,7 +43,6 @@ const AddData = ({ title, onFinish, initialValues, trigger }: AddDataProps) => {
       modalProps={{
         destroyOnClose: true,
         width: 400,
-        onCancel: () => console.log('run'),
       }}
       onFinish={(values) => onFinish({ ...initialValues, ...values })}
     >

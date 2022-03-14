@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'umi';
+import { useLocation, useIntl } from 'umi';
 import { Button, Row, Col, Card, Typography, message } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-table';
@@ -32,6 +32,7 @@ export type TableListItem = {
 
 export default () => {
   const location = useLocation();
+  const intl = useIntl();
   const [queryParams, setQueryParams] = useState(location.query);
   const [summary, setSummary] = useState({});
   const handleBookkeepingChange = async (values) => {
@@ -47,18 +48,18 @@ export default () => {
   };
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: 'Month',
+      title: intl.formatMessage({ id: 'bookkeeping.trade.month' }),
       dataIndex: 'month',
       hideInSearch: true,
       width: 100,
     },
     {
-      title: 'Item',
+      title: intl.formatMessage({ id: 'bookkeeping.trade.item' }),
       dataIndex: 'item',
       hideInSearch: true,
     },
     {
-      title: 'Amount',
+      title: intl.formatMessage({ id: 'bookkeeping.trade.amount' }),
       dataIndex: 'amount',
       hideInSearch: true,
       render: (value, { type }) => (
@@ -69,12 +70,12 @@ export default () => {
       ),
     },
     {
-      title: 'Owner',
+      title: intl.formatMessage({ id: 'bookkeeping.trade.owner' }),
       dataIndex: 'owner',
       render: (value) => value,
     },
     {
-      title: 'Created at',
+      title: intl.formatMessage({ id: 'bookkeeping.trade.createdAt' }),
       hideInSearch: true,
       key: 'created_at',
       dataIndex: 'created_at',
@@ -83,7 +84,7 @@ export default () => {
       render: (value) => <Text type="secondary">{value}</Text>,
     },
     {
-      title: 'Option',
+      title: intl.formatMessage({ id: 'bookkeeping.trade.option' }),
       width: '80px',
       key: 'option',
       align: 'center',
@@ -163,7 +164,12 @@ export default () => {
                     });
                   }}
                 >
-                  <ProFormDateRangePicker name="tradeRange" label="筛选日期" />
+                  <ProFormDateRangePicker
+                    name="tradeRange"
+                    label={intl.formatMessage({
+                      id: 'bookkeeping.filter.tradeDate',
+                    })}
+                  />
                 </LightFilter>
               ),
 
@@ -175,7 +181,7 @@ export default () => {
                   ghost
                   href="/api/bookkeeping/export"
                 >
-                  Export
+                  {intl.formatMessage({ id: 'bookkeeping.actions.export' })}
                 </Button>,
                 <ImportData />,
               ],

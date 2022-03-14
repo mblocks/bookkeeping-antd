@@ -1,9 +1,14 @@
 import { Statistic, Table } from 'antd';
+import { useIntl } from 'umi';
 
 const Summary = ({ data }) => {
+  const intl = useIntl();
   return (
     <>
-      <Statistic title="Total" value={data.total || 0} />
+      <Statistic
+        title={intl.formatMessage({ id: 'bookkeeping.metas.total' })}
+        value={data.total || 0}
+      />
       <Table
         bordered={false}
         pagination={false}

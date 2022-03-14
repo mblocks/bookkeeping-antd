@@ -1,3 +1,4 @@
+import { useIntl } from 'umi';
 import { Upload, message, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { ImportBookkeeping } from '@/services';
@@ -19,10 +20,11 @@ const props = {
 };
 
 const ImportData = () => {
+  const intl = useIntl();
   return (
     <Upload {...props}>
       <Button type="primary" ghost icon={<UploadOutlined />}>
-        Import
+        {intl.formatMessage({ id: 'bookkeeping.actions.import' })}
       </Button>
     </Upload>
   );
