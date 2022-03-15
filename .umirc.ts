@@ -4,8 +4,16 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
+  locale: {
+    default: 'en-US',
+    antd: true,
+  },
   routes: [
-    { path: '/', component: '@/pages/index' },
+    {
+      path: '/',
+      component: '@/layouts/index',
+      routes: [{ path: '/', component: '@/pages/index' }],
+    },
   ],
   fastRefresh: {},
 });
