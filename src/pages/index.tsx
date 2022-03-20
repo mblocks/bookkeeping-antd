@@ -4,11 +4,12 @@ import { Button, Row, Col, Card, Typography, message } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-table';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
+import { PlusOutlined } from '@ant-design/icons';
 import { LightFilter, ProFormDateRangePicker } from '@ant-design/pro-form';
 import ChartsLine from '@/components/Charts/Line';
 import Summary from '@/components/Summary';
 import ImportData from '@/components/ImportData';
-import AddData from '@/components/AddData';
+import TradeForm from '@/components/TradeForm';
 import {
   queryBookkeeping,
   queryBookkeepingSummary,
@@ -35,14 +36,17 @@ export default () => {
   const intl = useIntl();
   const [queryParams, setQueryParams] = useState(location.query);
   const [summary, setSummary] = useState({});
+  const [refresh, setRefresh] = useState(0);
+  const [tradeValues, setTradeValues] = useState(undefined);
   const handleBookkeepingChange = async (values) => {
-    const { result, ...res } = values.id
+    const { result } = values.id
       ? await updateBookkeeping(values)
       : await createBookkeeping(values);
     if (result) {
-      message.success('提交成功');
+      message.success(intl.formatMessage({ id: 'bookkeeping.result.success' }));
       setQueryParams({ ...queryParams, timeStamp: Date.now() });
-      setSummary(res.summary);
+      setRefresh(refresh + 1);
+      setTradeValues(undefined);
     }
     return true;
   };
@@ -72,15 +76,14 @@ export default () => {
     {
       title: intl.formatMessage({ id: 'bookkeeping.trade.owner' }),
       dataIndex: 'owner',
-      render: (value) => value,
     },
     {
       title: intl.formatMessage({ id: 'bookkeeping.trade.createdAt' }),
       hideInSearch: true,
       key: 'created_at',
-      dataIndex: 'created_at',
-      valueType: 'date',
-      width: 120,
+      dataIndex: 'data_created_at',
+      valueType: 'datetime',
+      width: 160,
       render: (value) => <Text type="secondary">{value}</Text>,
     },
     {
@@ -94,25 +97,22 @@ export default () => {
           menus={[
             {
               key: 'delete',
-              name: 'Delete',
+              name: intl.formatMessage({ id: 'bookkeeping.actions.delete' }),
               onClick: async () => {
                 const { result } = await removeBookkeeping(values);
                 if (result) {
                   message.success('Deleted success!');
                   setQueryParams({ ...queryParams, timeStamp: Date.now() });
+                  setRefresh(refresh + 1);
                 }
               },
             },
             {
-              name: 'sd',
-              key: 'ds',
-              renderItem: () => (
-                <AddData
-                  initialValues={values}
-                  trigger={<span>Edit</span>}
-                  onFinish={handleBookkeepingChange}
-                />
-              ),
+              key: 'edit',
+              name: intl.formatMessage({ id: 'bookkeeping.actions.edit' }),
+              onClick: () => {
+                setTradeValues({ ...values, owner: [values.owner] });
+              },
             },
           ]}
         />
@@ -121,7 +121,7 @@ export default () => {
   ];
   useEffect(() => {
     queryBookkeepingSummary().then((res) => setSummary(res));
-  }, []);
+  }, [refresh]);
   return (
     <div className={styles.bookkeeping}>
       <Row gutter={[24, 24]}>
@@ -134,6 +134,12 @@ export default () => {
           <Summary data={summary} />
         </Col>
         <Col span={24}>
+          <TradeForm
+            initialValues={tradeValues}
+            visible={tradeValues != undefined}
+            onFinish={handleBookkeepingChange}
+            onCancel={() => setTradeValues(undefined)}
+          />
           <ProTable<TableListItem>
             columns={columns}
             params={queryParams}
@@ -174,7 +180,18 @@ export default () => {
               ),
 
               actions: [
-                <AddData onFinish={handleBookkeepingChange} />,
+                <Button
+                  icon={<PlusOutlined />}
+                  type="primary"
+                  onClick={() =>
+                    setTradeValues({
+                      type: 'income',
+                      trade_at: new Date().getTime(),
+                    })
+                  }
+                >
+                  {intl.formatMessage({ id: 'bookkeeping.actions.add' })}
+                </Button>,
                 <Button
                   icon={<DownloadOutlined />}
                   type="primary"

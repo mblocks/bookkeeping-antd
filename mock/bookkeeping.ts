@@ -10,18 +10,18 @@ const summary = {
     { owner: 'lee', item: 'something', amount: 50 },
   ],
   trend: [
-    { date: '2022-01-01', amount: 200 },
-    { date: '2022-02-01', amount: 200 },
-    { date: '2022-03-01', amount: 340 },
-    { date: '2022-04-01', amount: 400 },
-    { date: '2022-05-01', amount: 500 },
-    { date: '2022-06-01', amount: 500 },
-    { date: '2022-07-01', amount: 400 },
-    { date: '2022-08-01', amount: 300 },
-    { date: '2022-09-01', amount: 600 },
-    { date: '2022-10-01', amount: 600 },
-    { date: '2022-11-01', amount: 600 },
-    { date: '2022-12-01', amount: 620 },
+    { amount: 200, month: '2021-01' },
+    { amount: 200, month: '2021-02' },
+    { amount: 340, month: '2021-03' },
+    { amount: 400, month: '2021-04' },
+    { amount: 500, month: '2021-05' },
+    { amount: 500, month: '2021-06' },
+    { amount: 400, month: '2021-07' },
+    { amount: 300, month: '2021-08' },
+    { amount: 600, month: '2021-09' },
+    { amount: 600, month: '2021-10' },
+    { amount: 600, month: '2021-11' },
+    { amount: 620, month: '2021-12' },
   ],
 };
 export default {
@@ -33,6 +33,9 @@ export default {
   'GET /api/bookkeeping/summary': (req: Request, res: Response) => {
     res.send(summary);
   },
+  'GET /api/bookkeeping/owners': (req: Request, res: Response) => {
+    res.send(['jack', 'tom', 'runny', 'lee']);
+  },
   'GET /api/bookkeeping': (req: Request, res: Response) => {
     const pageSize = req.query.page_size || 10;
     const mock = mockjs.mock({
@@ -42,10 +45,10 @@ export default {
           id: '@integer(1, 900000)',
           month: '@date("yyyyMM")',
           item: '@name',
-          'owner|1-1': ['@name'],
+          owner: '@name',
           trade_at: '@datetime("yyyy-MM-dd")',
-          created_at: '@datetime("yyyy-MM-dd HH:mm")',
-          updated_at: '@datetime("yyyy-MM-dd HH:mm")',
+          data_created_at: '@datetime("yyyy-MM-dd HH:mm")',
+          data_updated_at: '@datetime("yyyy-MM-dd HH:mm")',
           'type|1': ['income', 'expense'],
           'amount|1-4000': 100,
         },
@@ -54,15 +57,15 @@ export default {
     res.send(mock);
   },
   'POST /api/bookkeeping/:id/delete': (req: Request, res: Response) => {
-    res.send({ result: true, summary });
+    res.send({ result: true });
   },
   'POST /api/bookkeeping/import': (req: Request, res: Response) => {
-    res.send({ result: true, summary });
+    res.send({ result: true });
   },
   'POST /api/bookkeeping/:id': (req: Request, res: Response) => {
-    res.send({ result: true, summary });
+    res.send({ result: true });
   },
   'POST /api/bookkeeping': (req: Request, res: Response) => {
-    res.send({ result: true, summary });
+    res.send({ result: true });
   },
 };

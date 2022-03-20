@@ -1,9 +1,11 @@
 export default {
   'bookkeeping.title': 'Bookkeeping',
   'bookkeeping.actions.add': 'Add',
-  'bookkeeping.actions.add.title': 'Add Trade',
   'bookkeeping.actions.import': 'Import',
   'bookkeeping.actions.export': 'Export',
+  'bookkeeping.actions.delete': 'Delete',
+  'bookkeeping.actions.edit': 'Edit',
+  'bookkeeping.result.success': 'success',
   'bookkeeping.metas.total': 'Total',
   'bookkeeping.filter.tradeDate': 'Filter Trade Date',
   'bookkeeping.trade.item': 'Item',

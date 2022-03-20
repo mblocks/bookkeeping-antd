@@ -5,7 +5,6 @@ export default defineConfig({
     type: 'none',
   },
   locale: {
-    default: 'en-US',
     antd: true,
   },
   routes: [

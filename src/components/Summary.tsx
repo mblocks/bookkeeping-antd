@@ -15,15 +15,15 @@ const Summary = ({ data }) => {
         size="small"
         columns={[
           {
-            title: 'Owner',
+            title: intl.formatMessage({ id: 'bookkeeping.trade.owner' }),
             dataIndex: 'owner',
           },
           {
-            title: 'Item',
+            title: intl.formatMessage({ id: 'bookkeeping.trade.item' }),
             dataIndex: 'item',
           },
           {
-            title: 'Amount',
+            title: intl.formatMessage({ id: 'bookkeeping.trade.amount' }),
             dataIndex: 'amount',
           },
         ]}

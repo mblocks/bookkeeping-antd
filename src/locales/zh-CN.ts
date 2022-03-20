@@ -1,0 +1,18 @@
+export default {
+  'bookkeeping.title': '记账',
+  'bookkeeping.actions.add': '新增',
+  'bookkeeping.actions.import': '导入',
+  'bookkeeping.actions.export': '导出',
+  'bookkeeping.actions.delete': '删除',
+  'bookkeeping.actions.edit': '修改',
+  'bookkeeping.result.success': '操作成功',
+  'bookkeeping.metas.total': '总计',
+  'bookkeeping.filter.tradeDate': '筛选交易日期',
+  'bookkeeping.trade.item': '物品',
+  'bookkeeping.trade.date': '日期',
+  'bookkeeping.trade.month': '月份',
+  'bookkeeping.trade.amount': '金额',
+  'bookkeeping.trade.owner': '所属人',
+  'bookkeeping.trade.createdAt': '创建于',
+  'bookkeeping.trade.option': '操作',
+};
