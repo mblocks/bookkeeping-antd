@@ -68,41 +68,50 @@ const TradeForm = ({
     >
       <ProFormRadio.Group
         name="type"
-        label="Type"
+        label={intl.formatMessage({ id: 'bookkeeping.trade.type' })}
         radioType="button"
         fieldProps={{
           buttonStyle: 'solid',
         }}
-        required
+        rules={[{ required: true }]}
         options={[
           {
-            label: 'Income',
+            label: intl.formatMessage({ id: 'bookkeeping.trade.type.income' }),
             value: 'income',
           },
           {
-            label: 'Expense',
+            label: intl.formatMessage({ id: 'bookkeeping.trade.type.expense' }),
             value: 'expense',
           },
         ]}
       />
       <ProFormDatePicker
-        required
+        rules={[{ required: true }]}
         name="trade_at"
         width="md"
-        label="Trade Date"
+        label={intl.formatMessage({ id: 'bookkeeping.trade.date' })}
         dataFormat="YYYY-MM-DD"
       />
-      <ProFormText rules={[{ required: true }]} name="item" label="Item" />
-      <ProFormDigit label="Amount" name="amount" min={0} />
+      <ProFormText
+        rules={[{ required: true }]}
+        name="item"
+        label={intl.formatMessage({ id: 'bookkeeping.trade.item' })}
+      />
+      <ProFormDigit
+        label={intl.formatMessage({ id: 'bookkeeping.trade.amount' })}
+        name="amount"
+        min={0}
+        rules={[{ required: true }]}
+      />
       <ProFormSelect
-        required
+        rules={[{ required: true }]}
         mode="tags"
         request={async () => {
           const owners = await queryBookkeepingOwners();
           return owners.map((v) => ({ label: v, value: v }));
         }}
         name="owner"
-        label="Owner"
+        label={intl.formatMessage({ id: 'bookkeeping.trade.owner' })}
       />
     </ModalForm>
   );
