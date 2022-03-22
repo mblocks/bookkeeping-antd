@@ -16,9 +16,13 @@ const ChartsLine = ({ data }: ChartsLineProps) => {
     padding: 'auto',
     xField: 'date',
     yField: 'amount',
+    seriesField: 'type',
     xAxis: {
-      // type: 'timeCat',
-      tickCount: 5,
+      type: 'timeCat',
+      tickCount: 8,
+    },
+    color: ({ type }) => {
+      return type == 'income' ? '#52c41a' : '#ff4d4f';
     },
   };
   if (!data) {
