@@ -147,7 +147,7 @@ export default () => {
             <ChartsLine data={summary.trend} />
           </Card>
         </Col>
-        <Col span={12}>
+        <Col span={12} style={{ background: '#fff' }}>
           <Summary data={summary} />
         </Col>
         <Col span={24}>
