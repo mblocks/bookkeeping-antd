@@ -19,8 +19,8 @@ const Summary = ({ data }) => {
             dataIndex: 'owner',
           },
           {
-            title: intl.formatMessage({ id: 'bookkeeping.trade.item' }),
-            dataIndex: 'item',
+            title: intl.formatMessage({ id: 'bookkeeping.trade.category' }),
+            dataIndex: 'category',
           },
           {
             title: intl.formatMessage({ id: 'bookkeeping.trade.amount' }),

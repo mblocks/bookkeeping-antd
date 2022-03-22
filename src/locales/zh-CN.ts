@@ -11,6 +11,7 @@ export default {
   'bookkeeping.trade.type': '类型',
   'bookkeeping.trade.type.income': '收入',
   'bookkeeping.trade.type.expense': '支出',
+  'bookkeeping.trade.category': '类别',
   'bookkeeping.trade.item': '物品',
   'bookkeeping.trade.date': '日期',
   'bookkeeping.trade.month': '月份',

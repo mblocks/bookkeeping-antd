@@ -58,6 +58,11 @@ export default () => {
       width: 100,
     },
     {
+      title: intl.formatMessage({ id: 'bookkeeping.trade.category' }),
+      dataIndex: 'category',
+      hideInSearch: true,
+    },
+    {
       title: intl.formatMessage({ id: 'bookkeeping.trade.item' }),
       dataIndex: 'item',
       hideInSearch: true,

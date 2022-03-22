@@ -93,6 +93,10 @@ const TradeForm = ({
         dataFormat="YYYY-MM-DD"
       />
       <ProFormText
+        name="category"
+        label={intl.formatMessage({ id: 'bookkeeping.trade.category' })}
+      />
+      <ProFormText
         rules={[{ required: true }]}
         name="item"
         label={intl.formatMessage({ id: 'bookkeeping.trade.item' })}

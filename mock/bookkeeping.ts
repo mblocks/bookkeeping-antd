@@ -4,10 +4,10 @@ import { Request, Response } from 'express';
 const summary = {
   total: 100000,
   data: [
-    { owner: 'jack', item: 'boat', amount: 1000 },
-    { owner: 'tom', item: 'car', amount: 2000 },
-    { owner: 'runny', item: 'food', amount: 4000 },
-    { owner: 'lee', item: 'something', amount: 50 },
+    { owner: 'jack', category: 'boat', amount: 1000 },
+    { owner: 'tom', category: 'car', amount: 2000 },
+    { owner: 'runny', category: 'food', amount: 4000 },
+    { owner: 'lee', category: 'something', amount: 50 },
   ],
   trend: [
     { amount: 200, month: '2021-01' },
@@ -44,6 +44,7 @@ export default {
         {
           id: '@integer(1, 900000)',
           month: '@date("yyyyMM")',
+          category: '@name',
           item: '@name',
           owner: '@name',
           trade_at: '@datetime("yyyy-MM-dd")',

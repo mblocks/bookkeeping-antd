@@ -11,6 +11,7 @@ export default {
   'bookkeeping.trade.type': 'Type',
   'bookkeeping.trade.type.income': 'Income',
   'bookkeeping.trade.type.expense': 'Expense',
+  'bookkeeping.trade.category': 'Category',
   'bookkeeping.trade.item': 'Item',
   'bookkeeping.trade.date': 'Date',
   'bookkeeping.trade.month': 'Month',
