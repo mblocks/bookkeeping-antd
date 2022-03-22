@@ -187,7 +187,6 @@ export default () => {
                   onFinish={async ({ tradeRange, ...values }) => {
                     const [trade_start, trade_end] = tradeRange || [];
                     setQueryParams({
-                      ...queryParams,
                       ...values,
                       trade_start,
                       trade_end,
