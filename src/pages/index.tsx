@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation, useIntl } from 'umi';
+import { useLocation, useIntl, history } from 'umi';
 import { Button, Row, Col, Card, Typography, message } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -132,6 +132,9 @@ export default () => {
     queryBookkeepingSummary().then((res) => setSummary(res));
     tableRef.current.reload();
   }, [refresh]);
+  useEffect(() => {
+    history.push({ query: queryParams });
+  }, [queryParams]);
   return (
     <div className={styles.bookkeeping}>
       <Row gutter={[24, 24]}>
@@ -170,6 +173,12 @@ export default () => {
               settings: [],
               search: (
                 <LightFilter
+                  initialValues={{
+                    tradeRange: [
+                      queryParams.trade_start,
+                      queryParams.trade_end,
+                    ],
+                  }}
                   onFinish={async ({ tradeRange, ...values }) => {
                     const [trade_start, trade_end] = tradeRange || [];
                     setQueryParams({
