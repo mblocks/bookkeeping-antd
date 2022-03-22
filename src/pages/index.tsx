@@ -5,7 +5,11 @@ import { DownloadOutlined } from '@ant-design/icons';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import { PlusOutlined } from '@ant-design/icons';
-import { LightFilter, ProFormDateRangePicker } from '@ant-design/pro-form';
+import {
+  LightFilter,
+  ProFormDateRangePicker,
+  ProFormText,
+} from '@ant-design/pro-form';
 import ChartsLine from '@/components/Charts/Line';
 import Summary from '@/components/Summary';
 import ImportData from '@/components/ImportData';
@@ -174,6 +178,7 @@ export default () => {
               search: (
                 <LightFilter
                   initialValues={{
+                    ...queryParams,
                     tradeRange: [
                       queryParams.trade_start,
                       queryParams.trade_end,
@@ -194,6 +199,16 @@ export default () => {
                     label={intl.formatMessage({
                       id: 'bookkeeping.filter.tradeDate',
                     })}
+                  />
+                  <ProFormText
+                    name="category"
+                    label={intl.formatMessage({
+                      id: 'bookkeeping.trade.category',
+                    })}
+                  />
+                  <ProFormText
+                    name="item"
+                    label={intl.formatMessage({ id: 'bookkeeping.trade.item' })}
                   />
                 </LightFilter>
               ),
