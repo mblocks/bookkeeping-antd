@@ -1,7 +1,9 @@
 import { request } from 'umi';
 
 export async function queryBookkeeping(params): Promise<any> {
-  return await request('/api/bookkeeping', { params });
+  return await request('/api/bookkeeping', {
+    params: { ...params, page: params.current },
+  });
 }
 
 export async function queryBookkeepingSummary(): Promise<any> {

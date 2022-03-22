@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useIntl } from 'umi';
 import { Button, Row, Col, Card, Typography, message } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
-import type { ProColumns } from '@ant-design/pro-table';
+import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import { PlusOutlined } from '@ant-design/icons';
 import { LightFilter, ProFormDateRangePicker } from '@ant-design/pro-form';
@@ -35,6 +35,7 @@ export type TableListItem = {
 export default () => {
   const location = useLocation();
   const intl = useIntl();
+  const tableRef = useRef<ActionType>();
   const [queryParams, setQueryParams] = useState(location.query);
   const [summary, setSummary] = useState({});
   const [refresh, setRefresh] = useState(0);
@@ -45,7 +46,6 @@ export default () => {
       : await createBookkeeping(values);
     if (result) {
       message.success(intl.formatMessage({ id: 'bookkeeping.result.success' }));
-      setQueryParams({ ...queryParams, timeStamp: Date.now() });
       setRefresh(refresh + 1);
       setTradeValues(undefined);
     }
@@ -108,7 +108,6 @@ export default () => {
                 const { result } = await removeBookkeeping(values);
                 if (result) {
                   message.success('Deleted success!');
-                  setQueryParams({ ...queryParams, timeStamp: Date.now() });
                   setRefresh(refresh + 1);
                 }
               },
@@ -131,6 +130,7 @@ export default () => {
   ];
   useEffect(() => {
     queryBookkeepingSummary().then((res) => setSummary(res));
+    tableRef.current.reload();
   }, [refresh]);
   return (
     <div className={styles.bookkeeping}>
@@ -160,6 +160,7 @@ export default () => {
                 page_size: params.pageSize,
               });
             }}
+            actionRef={tableRef}
             rowKey="id"
             pagination={{
               //showQuickJumper: true,
@@ -176,7 +177,6 @@ export default () => {
                       ...values,
                       trade_start,
                       trade_end,
-                      page: 1,
                     });
                   }}
                 >
