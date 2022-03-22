@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'umi';
 import ProForm, {
   ModalForm,
@@ -8,7 +8,7 @@ import ProForm, {
   ProFormDigit,
   ProFormSelect,
 } from '@ant-design/pro-form';
-import { queryBookkeepingOwners } from '@/services';
+import { queryBookkeepingStatistics } from '@/services';
 
 export interface TradeFormProps {
   title?: string;
@@ -28,6 +28,7 @@ const TradeForm = ({
 }: TradeFormProps) => {
   const intl = useIntl();
   const [form] = ProForm.useForm();
+  const [statistics, setStatistics] = useState({ owner: [], category: [] });
   return (
     <ModalForm<{
       name: string;
@@ -45,6 +46,12 @@ const TradeForm = ({
       form={form}
       onVisibleChange={(v) => {
         if (v) {
+          queryBookkeepingStatistics(['owner', 'category']).then((res) => {
+            setStatistics({
+              ...res,
+              category: res.category ? res.category.filter((v) => v.name) : [],
+            });
+          });
           form.resetFields();
           form.setFieldsValue(initialValues);
         }
@@ -57,13 +64,23 @@ const TradeForm = ({
         width: 400,
         onCancel,
       }}
-      onValuesChange={({ owner }) => {
+      onValuesChange={({ owner, category }) => {
+        const fix = {};
         if (owner && owner.length > 0) {
-          form.setFieldsValue({ owner: [owner.pop()] });
+          fix.owner = [owner.pop()];
         }
+        if (category && category.length > 0) {
+          fix.category = [category.pop()];
+        }
+        form.setFieldsValue(fix);
       }}
       onFinish={(values) =>
-        onFinish({ ...initialValues, ...values, owner: values.owner.pop() })
+        onFinish({
+          ...initialValues,
+          ...values,
+          owner: values.owner.pop(),
+          category: values.category.pop(),
+        })
       }
     >
       <ProFormRadio.Group
@@ -92,9 +109,14 @@ const TradeForm = ({
         label={intl.formatMessage({ id: 'bookkeeping.trade.date' })}
         dataFormat="YYYY-MM-DD"
       />
-      <ProFormText
+      <ProFormSelect
+        mode="tags"
         name="category"
         label={intl.formatMessage({ id: 'bookkeeping.trade.category' })}
+        options={statistics.category.map((v) => ({
+          label: v.name,
+          value: v.name,
+        }))}
       />
       <ProFormText
         rules={[{ required: true }]}
@@ -110,12 +132,12 @@ const TradeForm = ({
       <ProFormSelect
         rules={[{ required: true }]}
         mode="tags"
-        request={async () => {
-          const owners = await queryBookkeepingOwners();
-          return owners.map((v) => ({ label: v, value: v }));
-        }}
         name="owner"
         label={intl.formatMessage({ id: 'bookkeeping.trade.owner' })}
+        options={statistics.owner.map((v) => ({
+          label: v.name,
+          value: v.name,
+        }))}
       />
     </ModalForm>
   );

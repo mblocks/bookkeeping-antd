@@ -12,8 +12,8 @@ export async function queryBookkeepingSummary(): Promise<any> {
   };
 }
 
-export async function queryBookkeepingOwners(): Promise<any> {
-  return await request('/api/bookkeeping/owners');
+export async function queryBookkeepingStatistics(name: string[]): Promise<any> {
+  return await request('/api/bookkeeping/statistics', { params: { name } });
 }
 
 export async function ImportBookkeeping(data): Promise<any> {

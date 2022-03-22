@@ -24,11 +24,12 @@ const { Text } = Typography;
 export type TableListItem = {
   key: number;
   month: string;
-  name: string;
+  category?: String;
+  item: string;
   owner: string;
   amount: number;
   type: string;
-  createdAt: number;
+  data_created_at: number;
 };
 
 export default () => {
@@ -116,7 +117,11 @@ export default () => {
               key: 'edit',
               name: intl.formatMessage({ id: 'bookkeeping.actions.edit' }),
               onClick: () => {
-                setTradeValues({ ...values, owner: [values.owner] });
+                setTradeValues({
+                  ...values,
+                  owner: [values.owner],
+                  category: values.category ? [values.category] : [],
+                });
               },
             },
           ]}
