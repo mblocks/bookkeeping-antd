@@ -147,7 +147,7 @@ export default () => {
             <ChartsLine data={summary.trend} />
           </Card>
         </Col>
-        <Col span={12} style={{ background: '#fff' }}>
+        <Col span={12}>
           <Summary data={summary} />
         </Col>
         <Col span={24}>
@@ -233,7 +233,14 @@ export default () => {
                 >
                   {intl.formatMessage({ id: 'bookkeeping.actions.export' })}
                 </Button>,
-                <ImportData />,
+                <ImportData
+                  onSuccess={() => {
+                    message.success(
+                      intl.formatMessage({ id: 'bookkeeping.result.success' }),
+                    );
+                    setRefresh(refresh + 1);
+                  }}
+                />,
               ],
             }}
             search={false}

@@ -10,7 +10,11 @@ export async function queryBookkeepingSummary(): Promise<any> {
   const res = await request('/api/bookkeeping/summary');
   return {
     ...res,
-    trend: res.trend.map((v) => ({ ...v, date: v.month + '-01' })),
+    trend: res.trend.map((v) => ({
+      ...v,
+      date: v.month + '-01',
+      anount: v.amount.toFixed(2),
+    })),
   };
 }
 

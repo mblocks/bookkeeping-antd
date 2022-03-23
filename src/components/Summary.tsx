@@ -7,7 +7,7 @@ const Summary = ({ data }) => {
     <>
       <Statistic
         title={intl.formatMessage({ id: 'bookkeeping.metas.total' })}
-        value={data.total || 0}
+        value={Number(data.total).toFixed(2) || 0}
       />
       <Table
         bordered={false}
@@ -25,6 +25,7 @@ const Summary = ({ data }) => {
           {
             title: intl.formatMessage({ id: 'bookkeeping.trade.amount' }),
             dataIndex: 'amount',
+            render: (v) => Number(v).toFixed(2),
           },
         ]}
         dataSource={
