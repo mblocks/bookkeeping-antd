@@ -1,4 +1,5 @@
 {
+  "name": "bookkeeping",
   "private": true,
   "scripts": {
     "start": "umi dev",
