@@ -4,10 +4,10 @@ import { Request, Response } from 'express';
 const summary = {
   total: 100000,
   data: [
-    { owner: 'jack', category: 'boat', amount: 1000 },
-    { owner: 'tom', category: 'car', amount: 2000 },
-    { owner: 'runny', category: 'food', amount: 4000 },
-    { owner: 'lee', category: 'something', amount: 50 },
+    { owner: 'jack', category: 'boat', amount: 1000, type: 'expense' },
+    { owner: 'tom', category: 'car', amount: 2000, type: 'income' },
+    { owner: 'runny', category: 'food', amount: 4000, type: 'income' },
+    { owner: 'lee', category: 'something', amount: 50, type: 'expense' },
   ],
   trend: [
     { amount: 200, month: '2021-01', type: 'income' },
