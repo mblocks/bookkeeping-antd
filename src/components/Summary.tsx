@@ -1,6 +1,7 @@
-import { Statistic, Table } from 'antd';
+import { Statistic, Table, Typography } from 'antd';
 import { useIntl } from 'umi';
 
+const { Text } = Typography;
 const Summary = ({ data }) => {
   const intl = useIntl();
   return (
@@ -25,7 +26,12 @@ const Summary = ({ data }) => {
           {
             title: intl.formatMessage({ id: 'bookkeeping.trade.amount' }),
             dataIndex: 'amount',
-            render: (v) => Number(v).toFixed(2),
+            render: (v, { type }) => (
+              <Text type={type == 'income' ? 'success' : 'danger'}>
+                {type == 'income' ? '+' : '-'}
+                {Number(v).toFixed(2)}
+              </Text>
+            ),
           },
         ]}
         dataSource={
